@@ -31,15 +31,15 @@ jobs:
   publish-gpr:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+    # permissions:
+    #   contents: read
+    #   packages: write
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: https://npm.pkg.github.com/
+          registry-url: npm login --registry=https://npm.pkg.github.com --scope=@phanatic
       - run: npm config set _auth $NPM_REGISTRY_TOKEN && npm config set registry $NPM_REGISTRY_URL && npm config set always-auth=true && npm config set email=yashwanths@devtools.in
       - run: npm install
       - run: npm publish

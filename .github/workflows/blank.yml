@@ -7,6 +7,10 @@ on:
   push
   # release:
   #   types: [created] 
+env: 
+   NPM_REGISTRY_TOKEN: ${{ secrets.NPM_TOKEN }}
+   NPM_REGISTRY_URL: 'https://npm.pkg.github.com/'
+   
 
 jobs:
   build:
@@ -14,9 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+        
+          
         with:
           node-version: 16
+    
       - run: npm install
+    
       # - run: npm init
       # - run: npm test --passWithNoTests
 
@@ -32,6 +40,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
+      - run: npm config set _auth $NPM_REGISTRY_TOKEN && npm config set registry $NPM_REGISTRY_URL && npm config set always-auth=true && npm config set email=yashwanths@devtools.in
       - run: npm install
       - run: npm publish
         env:

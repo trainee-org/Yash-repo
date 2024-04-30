@@ -16,7 +16,7 @@ jobs:
         with:
           owner: trainee-org
           repo: Yash-repo
-          pull_number: ${{ github.event.issue.number }}
+          pull_number: ${{ github.event.pull_request.number }} # Use pull_request.number instead of issue.number
       
       - name: Echo reviews count
         run: echo "The approved reviews count is ${{ steps.reviewsCount.outputs.approved }}"

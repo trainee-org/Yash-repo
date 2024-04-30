@@ -14,7 +14,6 @@ jobs:
         id: reviewsCount
         uses: github-actions-tools/gh-reviews-count@v0.0.1
         with: 
-          token: ${{ github.token }}
           owner: ${{ github.repository_owner }}
           pull_number: ${{ github.event.issue.number }}
           repo: ${{ github.event.repository.name }}

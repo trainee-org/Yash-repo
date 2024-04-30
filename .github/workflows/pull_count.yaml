@@ -1,15 +1,19 @@
 name: pr_count
 
 on: push
+
 jobs:
   count:
     runs-on: ubuntu-latest
     steps:
-          - uses: actions/checkout@v2
-          # Get the reviews count by state kind.
-          - uses: github-actions-tools/gh-reviews-count@v0.0.1
-            id: reviewsCount
-          - run: echo "The approved reviews count is ${REVIEWS}"
-            if: success() && steps.reviewsCount.outputs.approved
-            env:
-              REVIEWS: ${{ steps.reviewsCount.outputs.approved }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      # Get the reviews count by state kind.
+      - name: Get reviews count
+        id: reviewsCount
+        uses: github-actions-tools/gh-reviews-count@v0.0.1
+      
+      - name: Echo reviews count
+        run: echo "The approved reviews count is ${{ steps.reviewsCount.outputs.approved }}"
+        if: success() && steps.reviewsCount.outputs.approved

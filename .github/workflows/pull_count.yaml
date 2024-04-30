@@ -1,12 +1,14 @@
 name: Pull Request Stats
 
 on: pull_request
+
 jobs:
   create-report:
     name: "Create report"
     runs-on: ubuntu-latest
     steps:
       - name: "Run script for analytics"
+        id: analytics
         uses: AlexSim93/pull-request-analytics-action@v2
         with:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
@@ -18,3 +20,12 @@ jobs:
           TIMEZONE: "Europe/Berlin"
           REPORT_DATE_START: ${{ inputs.report_date_start }}
           REPORT_DATE_END: ${{ inputs.report_date_end }}
+          EXECUTION_OUTCOME: "collection, markdown"
+
+      - name: Debug JSON Collection
+        run: |
+          echo "JSON Collection: ${{ steps.analytics.outputs.JSON_COLLECTION }}"
+
+      - name: Debug Markdown Report
+        run: |
+          echo "Markdown Report: ${{ steps.analytics.outputs.MARKDOWN }}"

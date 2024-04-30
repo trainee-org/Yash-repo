@@ -11,13 +11,13 @@ jobs:
       
       # Get the reviews count by state kind.
       - name: Get reviews count
-        id: reviewsCount
-        uses: github-actions-tools/gh-reviews-count@v0.0.1
+        id: analytics
+        uses: AlexSim93/pull-request-analytics-action@v2.2.7
         with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           owner: trainee-org
           repo: Yash-repo
-          pull_number: ${{ github.event.pull_request.number }} # Use pull_request.number instead of issue.number
       
       - name: Echo reviews count
-        run: echo "The approved reviews count is ${{ steps.reviewsCount.outputs.approved }}"
-        if: success() && steps.reviewsCount.outputs.approved
+        run: echo "The approved reviews count is ${{ steps.analytics.outputs.approved }}"
+        if: success() && steps.analytics.outputs.approved

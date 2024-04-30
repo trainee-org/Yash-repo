@@ -14,7 +14,7 @@ jobs:
         id: analytics
         uses: AlexSim93/pull-request-analytics-action@v2.2.7
         with:
-            GITHUB_TOKEN: ${{ secrets.MY_PAT }}
+            GITHUB_TOKEN: ${{ secrets.TOKEN }}
             GITHUB_REPO_FOR_ISSUE: "Yash-repo"
             GITHUB_OWNER_FOR_ISSUE: "trainee-org"
             GITHUB_OWNERS_REPOS: "trainee-org/Yash-repo"

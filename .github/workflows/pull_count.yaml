@@ -12,6 +12,10 @@ jobs:
 
       - name: Set up GraphQL
         run: |
-          PR_COUNT=$(curl -X POST -H "Authorization: bearer ${{ secrets.TOKEN }}" -d '{ "query": "query { repository(owner: \"${{ github.repository_owner }}\", name: \"${{ github.event.repository.name }}\") { pullRequests(states: [OPEN]) { totalCount } } }" }' https://api.github.com/graphql | jq '.data.repository.pullRequests.totalCount')
+          PR_DATA=$(curl -X POST -H "Authorization: bearer ${{ secrets.TOKEN }}" -d '{ "query": "query { repository(owner: \"${{ github.repository_owner }}\", name: \"${{ github.event.repository.name }}\") { pullRequests(states: [OPEN]) { totalCount edges { node { number } } } } }" }' https://api.github.com/graphql | jq '.data.repository.pullRequests')
+
+          PR_COUNT=$(echo $PR_DATA | jq '.totalCount')
+          PR_NUMBERS=$(echo $PR_DATA | jq -r '.edges[].node.number')
 
           echo "Total open pull requests: $PR_COUNT"
+          echo "Pull request numbers: $PR_NUMBERS"

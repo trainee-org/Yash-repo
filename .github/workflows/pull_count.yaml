@@ -13,6 +13,10 @@ jobs:
       - name: Get reviews count
         id: reviewsCount
         uses: github-actions-tools/gh-reviews-count@v0.0.1
+        with:
+          owner: ${{ github.repository_owner }}
+          pull_number: ${{ github.event.issue.number }}
+          repo: ${{ github.event.repository.name }}
       
       - name: Echo reviews count
         run: echo "The approved reviews count is ${{ steps.reviewsCount.outputs.approved }}"

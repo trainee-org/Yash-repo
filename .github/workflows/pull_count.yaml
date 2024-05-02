@@ -22,11 +22,14 @@ jobs:
         -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
         | jq -r '.[] | "\(.title) - \(.html_url)"' > pull_requests_info.txt
         
-    - name: Commit and push changes
+    - name: Set up Git and set origin URL
       run: |
         git config --global user.email "yashwanths@devtools.in"
         git config --global user.name "Yashwanth-kumar-s"
-        git remote set-url origin "https:${{ secrets.TOKEN }}@github.com/trainee-org/Yash-repo"
+        git remote set-url origin "https://${{ secrets.TOKEN}}@github.com/trainee-org/Yash-repo.git"
+        
+    - name: Commit and push changes
+      run: |
         git add pull_requests_info.txt
         git commit -m "Update pull request info"
         git push

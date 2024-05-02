@@ -1,25 +1,23 @@
-name: Count Pull Requests
+name: Fetch Pull Request Numbers
 
 on:
   push
 
 jobs:
-  count-prs:
+  fetch-pull-requests:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set PR number environment variable
-        run: |
-          echo "::set-env name=PR_NUMBER::$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")"
-
-      - name: Set up GraphQL
-        run: |
-          PR_DATA=$(curl -X POST -H "Authorization: bearer ${{ secrets.TOKEN }}" -d '{ "query": "query { repository(owner: \"trainee-org\", name: \"Yash-repo\") { pullRequests(states: [OPEN]) { totalCount edges { node { number } } } } }" }' https://api.github.com/graphql | jq '.data.repository.pullRequests')
-
-          PR_COUNT=$(echo $PR_DATA | jq '.totalCount')
-          PR_NUMBERS=$(echo $PR_DATA | jq -r '.edges[].node.number')
-
-          echo "Total open pull requests: $PR_COUNT"
-          echo "Pull request numbers: $PR_NUMBERS"
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Install curl and jq
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y curl jq
+      
+    - name: Fetch Pull Request Numbers
+      run: |
+        curl -s "https://api.github.com/repos/trainee-org/Yash-repo/pulls" \
+        -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+        | jq '.[].number'

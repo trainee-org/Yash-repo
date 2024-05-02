@@ -3,7 +3,7 @@ name: Fetch Pull Requests Info
 on:
   push
 permissions:
-  actions: read|write
+  actions: read
  
 jobs:
   fetch-pull-requests:

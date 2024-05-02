@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       
     - name: Install curl and jq
       run: |
@@ -27,12 +27,14 @@ jobs:
         
     - name: Set up Git and set origin URL
       run: |
-        git config --global user.email "yashwanths@devtools.in"
+        git config user.name "github-actions[bot]"
         git config --global user.name "Yashwanth-kumar-s"
-        git remote set-url origin "https://${{ secrets.TOKEN}}@github.com/trainee-org/Yash-repo.git"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         
     - name: Commit and push changes
       run: |
-        git add pull_requests_info.txt
-        git commit -m "Update pull request info"
-        git push
+         git add .
+         git commit -m "generated"
+         git push
+
+

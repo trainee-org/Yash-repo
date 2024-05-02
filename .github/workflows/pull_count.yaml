@@ -2,6 +2,8 @@ name: Fetch Pull Requests Info
 
 on:
   push
+permissions:
+  actions: read|write
  
 jobs:
   fetch-pull-requests:

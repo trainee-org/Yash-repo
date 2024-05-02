@@ -2,7 +2,7 @@ name: Fetch Pull Requests Info
 
 on:
   push
-
+ 
 jobs:
   fetch-pull-requests:
     runs-on: ubuntu-latest
